@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
 import NavBar from './common/NavBar';
+import PhotoStream from './stream/PhotoStream';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,9 @@ class App extends Component {
         <header className="App-header">
           <NavBar />
         </header>
+        <section>
+          <PhotoStream />
+        </section>
       </div>
     );
   }

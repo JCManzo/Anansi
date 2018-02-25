@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './SearchBar.css';
+import './SearchBar.scss';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -21,7 +21,8 @@ class SearchBar extends Component {
             type="search"
             placeholder="Search"
             aria-label="Search"
-            onChange={event => this.onInputChange(event.target.value)} />
+            onChange={event => this.onInputChange(event.target.value)}
+          />
           <div className="input-group-append">
             <button className="btn btn-outline-secondary" type="button">Upload</button>
           </div>

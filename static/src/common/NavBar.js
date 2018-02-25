@@ -1,12 +1,16 @@
 import React from 'react';
-import SearchBar from './SearchBar.js';
+import SearchBar from './SearchBar';
 
-const NavBar = () => {
-  // Comment here
+function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand mb-0 h1" href="#">Anansi</a>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+      >
         <span className="navbar-toggler-icon" />
       </button>
 
@@ -26,6 +30,6 @@ const NavBar = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default NavBar;
