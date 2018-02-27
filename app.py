@@ -1,7 +1,11 @@
-from flask import Flask, render_template
+import os
+import sqlite3
 
-app = Flask(__name__, static_folder="../src", template_folder="../public")
+from config import *
+from flask import Flask, request, session, g, redirect, url_for, \
+     abort, render_template, flash
 
+app = Flask(__name__, static_url_path='', static_folder=ASSETS_FOLDER, template_folder=TEMPLATE_FOLDER)
 
 @app.route('/')
 def index():

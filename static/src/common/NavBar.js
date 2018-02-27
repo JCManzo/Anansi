@@ -1,5 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar';
+import Avatar from '../../assets/av.png';
+import'./NavBar.scss';
 
 function NavBar() {
   return (
@@ -27,6 +29,9 @@ function NavBar() {
           </li>
         </ul>
         <SearchBar />
+        <div id="nav-profile" className="nav-item">
+          <img className="rounded-circle" alt="Profile image" src={Avatar} />
+        </div>
       </div>
     </nav>
   );

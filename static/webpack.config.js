@@ -11,11 +11,11 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'dist'),
-    publicPath: ''
+    publicPath: '/dist/'
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist',
+    contentBase: "./",
     hot: true
   },
   module: {
@@ -50,14 +50,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.png$/,
+        use: ['file-loader']
       }]
   },
   plugins: [
     new CleanWebpackPlugin(['dist/*']),
-    new HtmlWebPackPlugin({
-      template: './index.html',
-      filename: './index.html'
-    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
