@@ -1,0 +1,2 @@
+graft static/dist
+graft static

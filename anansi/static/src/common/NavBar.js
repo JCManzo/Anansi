@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import Avatar from '../../assets/av.png';
-import'./NavBar.scss';
+import './NavBar.scss';
 
 function NavBar() {
   return (

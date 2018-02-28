@@ -12,3 +12,5 @@ npm-debug.log
 
 anansi.sublime-project
 anansi.sublime-workspace
+__pycache__/
+*.pyc

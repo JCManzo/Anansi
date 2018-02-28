@@ -1,3 +1,0 @@
-graft anansi/static/dist
-graft anansi/static
-include anansi/schema.sql
