@@ -14,3 +14,4 @@ anansi.sublime-project
 anansi.sublime-workspace
 __pycache__/
 *.pyc
+static/dist
