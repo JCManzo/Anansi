@@ -9,3 +9,6 @@ npm-debug.log
 
 *.egg-info/
 *.db
+
+anansi.sublime-project
+anansi.sublime-workspace
