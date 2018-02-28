@@ -1,4 +1,11 @@
-anansi.sublime-project
-anansi.sublime-workspace
-node_modules
+/node_modules
+bundle.js
+npm-debug.log
 .DS_Store
+
+# IntelliJ
+*.iml
+/.idea
+
+*.egg-info/
+*.db
