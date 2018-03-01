@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavBar from './common/NavBar';
+import NavBar from './components/NavBar';
 import PhotoStream from './stream/PhotoStream';
 import './App.css';
 
