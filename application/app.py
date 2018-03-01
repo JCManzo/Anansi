@@ -1,6 +1,7 @@
 from flask import request, render_template, jsonify, url_for, redirect, g
 from index import app, db
 from .models import User
+from .utils.auth import generate_token
 from sqlalchemy.exc import IntegrityError
 
 
@@ -9,17 +10,12 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/<path:path>', methods=['GET'])
-def catch_all(path):
-    return render_template('index.html')
-
-
 @app.route('/api/user', methods=['GET'])
 def get_user():
     return jsonify(result=g.current_user)
 
 
-@app.route('api/create_user', methods=['POST'])
+@app.route('/api/create_user', methods=['POST'])
 def create_user():
     data = request.get_json()
     user = User(
