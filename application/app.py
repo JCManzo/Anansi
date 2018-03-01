@@ -30,9 +30,18 @@ def create_user():
     except IntegrityError:
         return jsonify(message="USer with username or email already exists"), 409
 
-    new_user = User.query.filter_by(username=data['email']).first()
+    new_user = User.query.filter_by(username=data['username']).first()
 
     return jsonify(
         id=user.id,
         token=generate_token(new_user)
     )
+
+@app.route('/api/get_token', methods=['POST'])
+def get_token():
+    data = request.get_json()
+    user = User.get_user_with_username_and_password(data['username'], data['password'])
+    if user:
+        return jsonify(token=generate_token(user))
+
+    return jsonify(error=True), 403

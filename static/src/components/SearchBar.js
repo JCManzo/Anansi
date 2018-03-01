@@ -23,9 +23,9 @@ class SearchBar extends Component {
             aria-label="Search"
             onChange={event => this.onInputChange(event.target.value)}
           />
-          <div className="input-group-append">
+          {/*<div className="input-group-append">
             <button className="btn btn-outline-secondary" type="button">Upload</button>
-          </div>
+          </div>*/}
         </div>
       </form>
     );

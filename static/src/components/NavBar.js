@@ -29,9 +29,13 @@ function NavBar() {
           </li>
         </ul>
         <SearchBar />
-        <div id="nav-profile" className="nav-item">
-          <img className="rounded-circle" alt="Profile image" src={Avatar} />
+        <div className="btn-toolbar ml-auto" role="group" aria-label="Auth buttons">
+          <button className="btn btn-link" type="button">Log in</button>
+          <a className="btn btn-primary" href="#" role="button">Sign up</a>
         </div>
+        {/* <div id="nav-profile" className="nav-item">
+          <img className="rounded-circle" alt="Profile image" src={Avatar} />
+        </div> */}
       </div>
     </nav>
   );
