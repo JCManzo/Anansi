@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import NavBar from './components/NavBar';
-import PhotoStream from './stream/PhotoStream';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
 
@@ -16,12 +15,8 @@ class App extends Component {
         <header className="App-header">
           <NavBar />
         </header>
-        <section>
-          <PhotoStream />
-        </section>
+        {this.props.children}
       </div>
     );
   }
 }
-
-export default App;

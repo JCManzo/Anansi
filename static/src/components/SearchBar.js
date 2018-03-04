@@ -13,19 +13,16 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form id="search-bar-form" className="form-inline">
+      <form id="search-bar-form" className="form-inline my-2 my-lg-0">
         <div id="search-bar" className="input-group">
           <i className="fa fa-search" />
           <input
-            className="form-control rounded-left"
+            className="form-control rounded-left mr-sm-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
             onChange={event => this.onInputChange(event.target.value)}
           />
-          {/*<div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="button">Upload</button>
-          </div>*/}
         </div>
       </form>
     );

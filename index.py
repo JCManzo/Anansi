@@ -7,12 +7,13 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
-
+from flask_cors import CORS
 # Create application instance.
 app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 # Load config from config module.
 app.config.from_object(BaseConfig)
+CORS(app)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

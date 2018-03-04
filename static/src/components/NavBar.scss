@@ -1,9 +1,30 @@
+.navbar {
+  background-color: #175785;
+  box-shadow: 0 8px 6px -6px #999;
+}
+
+.navbar .btn-link {
+  color: white;
+}
+
 #nav-profile {
-  padding-left: 5px;
   cursor: pointer;
+  display: inline-block;
+}
+
+#dropdownMenuToggle {
+   background: none;
 }
 
 #nav-profile img {
   width: 33px;
   height: 33px;
+}
+
+.dropdown-toggle:after{
+  display:none;
+}
+
+.btn-toolbar {
+  display: inline-block;
 }
