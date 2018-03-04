@@ -47,7 +47,42 @@ function NavBarActions(props) {
             </button>
           </div>
         </div>
-        <button className="btn btn-success">Upload</button>
+
+        {/* Upload modal */}
+        <button
+          className="btn btn-success"
+          data-toggle="modal"
+          data-target="#uploadModal"
+        >Upload
+        </button>
+
+        <div
+          className="modal fade"
+          id="uploadModal"
+          tabIndex="-1"
+          aria-labelledby="uploadModalTitle"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="uploadModalTitle">Upload an image</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                />
+              </div>
+              <div className="modal-body">
+                <h3>YOOOOO</h3>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary">Upload</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -107,7 +142,8 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   logOutAndRedirect: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  logOut: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
