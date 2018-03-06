@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../actions/data';
+
 import PhotoList from './PhotoList';
 import './PhotoStream.scss';
 
-export default class PhotoStream extends Component {
+function mapStateToProps({data}) {
+  return data;
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+class PhotoStream extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      photos: [],
       selectedPhoto: null
     };
 
-    this.fetchPhotos();
-  }
-
-  fetchPhotos() {
-    fetch('https://jsonplaceholder.typicode.com/photos?albumId=1')
-      .then(response => response.json())
-      .then(photos => this.setState({ photos }));
+    this.props.fetchPhotoStream();
   }
 
   render() {
     return (
       <div id="photo-stream" className="container-fluid">
         <PhotoList
-          photos={this.state.photos}
+          photos={this.props.photos}
         />
       </div>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoStream)

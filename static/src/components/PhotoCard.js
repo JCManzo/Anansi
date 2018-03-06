@@ -3,7 +3,6 @@ import './PhotoCard.scss';
 
 function PhotoCard({photo}) {
   const photoUrl = photo.url;
-  const title = photo.title;
 
   return (
     <div

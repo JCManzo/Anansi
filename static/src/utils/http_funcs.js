@@ -41,3 +41,30 @@ export function isTokenValid(token) {
     method: 'POST'
   });
 }
+
+export function uploadPhotos(files) {
+  const token = localStorage.getItem('token');
+  const data = new FormData();
+
+  data.append('token', token);
+  files.forEach((file) => {
+    data.append('files[]', file);
+  });
+
+  return request(`${server}/api/photos`, {
+    body: data,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    method: 'POST'
+  });
+}
+
+export function getAllPhotos() {
+  const token = localStorage.getItem('token');
+  return request(`${server}/api/photos`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}

@@ -9,6 +9,7 @@ import SearchBar from './SearchBar';
 import Avatar from '../../assets/av.png';
 import './NavBar.scss';
 import history from '../utils/history';
+import DragDropUploader from './DragDropUploader';
 
 function mapStateToProps(state) {
   return {
@@ -75,7 +76,7 @@ function NavBarActions(props) {
                 />
               </div>
               <div className="modal-body">
-                <h3>YOOOOO</h3>
+                <DragDropUploader />
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-primary">Upload</button>

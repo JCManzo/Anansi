@@ -3,13 +3,15 @@ import React from 'react';
 import PhotoCard from './PhotoCard';
 
 function PhotoList(props) {
-  const photos = props.photos.map(photo => (
-    <PhotoCard
-      key={photo.id}
-      onPhotoSelect={this.selectedPhoto}
-      photo={photo}
-    />
-  ));
+  const photos = props.photos.map((photo) => {
+    return(
+      <PhotoCard
+        key={photo.id}
+        onPhotoSelect={this.selectedPhoto}
+        photo={photo}
+      />
+    );
+  });
 
   return (
     <div className="row">

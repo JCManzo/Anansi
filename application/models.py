@@ -1,7 +1,10 @@
 from index import db, bcrypt
+from marshmallow import Schema, fields
 
 
 class User(db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
@@ -32,3 +35,23 @@ class User(db.Model):
             return user
         else:
             return None
+
+
+class Photo(db.Model):
+    __tablename__ = 'photos'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    filename = db.Column(db.String, default=None, nullable=True)
+    url = db.Column(db.String, default=None, nullable=True)
+
+    def __init__(self, user_id, filename=None, url=None):
+        self.user_id = user_id
+        self.filename = filename
+        self.url = url
+
+
+class PhotoSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(required=True)
+    url = fields.Str(required=True)
