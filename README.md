@@ -18,11 +18,10 @@ The Back-end relies on:
 # Screenshots
 
 Home feed view
-https://i.imgur.com/7qhd8A4.jpg
-
+![Home feed view](https://i.imgur.com/7qhd8A4.jpg)
 
 Upload image prompt view
-https://i.imgur.com/ZjXJxDo.jpg
+![Upload image prompt view](https://i.imgur.com/ZjXJxDo.jpg)
 
 Profile view
-https://i.imgur.com/07xqTXD.jpg
+![Profile view](https://i.imgur.com/07xqTXD.jpg)
