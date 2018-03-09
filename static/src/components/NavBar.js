@@ -4,26 +4,27 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as actionCreators from '../actions/auth';
+import * as authActions from '../actions/auth';
+import * as dataActions from '../actions/data';
 import SearchBar from './SearchBar';
 import Avatar from '../../assets/av.png';
 import './NavBar.scss';
-import history from '../utils/history';
-import DragDropUploader from './DragDropUploader';
+import Modal from './Modal';
+import PhotoDropzone from './PhotoDropzone';
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    isAuthenticating: state.auth.isAuthenticating
+    auth: state.auth,
+    data: state.data
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
+  return bindActionCreators(Object.assign({}, dataActions, authActions), dispatch);
 }
 
 function NavBarActions(props) {
-  if (props.isAuthenticated) {
+  if (props.auth.isAuthenticated) {
     return (
       <div>
         <div id="nav-profile" className="dropdown" role="group" aria-label="Profile menu">
@@ -49,21 +50,16 @@ function NavBarActions(props) {
           </div>
         </div>
 
-        {/* Upload modal */}
         <button
           className="btn btn-success"
           data-toggle="modal"
           data-target="#uploadModal"
+          onClick={ () => props.uploadModalToggleRequest()}
         >Upload
         </button>
 
-        <div
-          className="modal fade"
-          id="uploadModal"
-          tabIndex="-1"
-          aria-labelledby="uploadModalTitle"
-          aria-hidden="true"
-        >
+        {/* Upload modal */}
+        <Modal show={props.data.isUploadModalOpen}>
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -76,14 +72,19 @@ function NavBarActions(props) {
                 />
               </div>
               <div className="modal-body">
-                <DragDropUploader />
+                <PhotoDropzone upload={props.data.uploadPhotoRequest}/>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary">Upload</button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={ () => props.uploadPhotosRequest() }
+                >Upload
+                </button>
               </div>
             </div>
           </div>
-        </div>
+        </Modal>
       </div>
     );
   }
@@ -101,14 +102,9 @@ class NavBar extends Component {
     super(props);
   }
 
-  logOut(e) {
-    e.preventDefault();
-    this.props.logOutAndRedirect();
-  }
-
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-dark">
+      <nav className="navbar fixed-top navbar-expand-md navbar-dark">
         <Link to="/home" role="button" className="navbar-brand mb-0 h1">Anansi</Link>
         <button
           className="navbar-toggler"
@@ -142,8 +138,7 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  logOutAndRedirect: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  uploadPhotosRequest: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired
 };
 

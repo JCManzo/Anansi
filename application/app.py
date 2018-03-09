@@ -1,11 +1,12 @@
-from flask import request, render_template, jsonify, url_for, redirect, g, send_from_directory
-from index import app, db, PhotosSet
+from flask import request, render_template, jsonify, redirect, g, send_from_directory
+from index import app, db, PhotoSet
 import sys
 from sqlalchemy.exc import *
 
 from .models import User, Photo, PhotoSchema
 from .utils.auth import generate_token, validate_token
 from marshmallow import pprint
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -69,14 +70,18 @@ def is_token_valid():
 
 @app.route('/uploads/<path:filename>', methods=['GET'])
 def download_file(filename):
+    # Serve image uploads
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
+@app.route('/api/photos/<int:id>', methods=['GET'])
 @app.route('/api/photos', methods=['POST', 'GET'])
-def photos():
+def photos(id=None):
+    # Upload photos with POST or fetch an image with GET
     if not request.headers.get('Authorization'):
         return jsonify(error='No token provided.')
-    if request.method == 'POST' and request.files.getlist('files[]'):
+
+    if request.method == 'POST' and request.files.getlist('file'):
         token = request.headers.get('Authorization').split('Bearer ', 1)[1]
         token = validate_token(token)
         if not token:
@@ -84,13 +89,13 @@ def photos():
 
         # Get user id from opened token.
         user_id = token.get('id')
-        for file in request.files.getlist('files[]'):
+        for file in request.files.getlist('file'):
             # Save file and get it's name (including folder)
-            filename = PhotosSet.save(file)
+            filename = PhotoSet.save(file)
             photo = Photo(
                 user_id=user_id,
                 filename=filename,
-                url=PhotosSet.url(filename)
+                url=PhotoSet.url(filename)
             )
             db.session.add(photo)
 
@@ -100,11 +105,13 @@ def photos():
                 return jsonify(message="Unable to upload image " + filename), 409
         return jsonify(success=True)
     elif request.method == 'GET':
-        photo_res = Photo.query.all()
-
-        photo_schema = PhotoSchema(many=True, only=('id', 'url'))
-        data, errors = photo_schema.dumps(photo_res)
-        pprint(data)
-        return jsonify(data=data, errors=errors)
+        if id:
+            # Get image with id
+            return jsonify(message=True)
+        else:
+            photo_res = Photo.query.all()
+            photo_schema = PhotoSchema(many=True, only=('id', 'url'))
+            data, errors = photo_schema.dumps(photo_res)
+            return jsonify(data=data, errors=errors)
 
     return jsonify(message='Method not allowed'), 405

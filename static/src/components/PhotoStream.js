@@ -22,7 +22,7 @@ class PhotoStream extends Component {
       selectedPhoto: null
     };
 
-    this.props.fetchPhotoStream();
+    this.props.fetchHomeFeed();
   }
 
   render() {

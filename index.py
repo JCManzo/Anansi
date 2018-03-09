@@ -19,8 +19,8 @@ app.config.from_object(BaseConfig)
 CORS(app)
 
 # Configure photo uploads via Flask-Uploads
-PhotosSet = UploadSet('photos', IMAGES)
-configure_uploads(app, PhotosSet)
+PhotoSet = UploadSet('photos', IMAGES)
+configure_uploads(app, PhotoSet)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

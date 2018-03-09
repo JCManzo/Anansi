@@ -1,0 +1,24 @@
+$transition-time: 0.3;
+$transform-scale: 0;
+$transform-scale-in: 1;
+
+.modal-backdrop {
+    z-index: 1000;
+}
+
+.modal.fade .modal-dialog {
+    transform: scale($transform-scale);
+    -moz-transform: scale($transform-scale);
+    -webkit-transform: scale($transform-scale);
+    opacity: 0;
+    transition: all $transition-time linear;
+    -webkit-transition: all $transition-time linear;
+    -moz-transition: all $transition-time linear;
+}
+
+.modal.fade.show .modal-dialog {
+    opacity: 1;
+    transform: scale($transform-scale-in);
+    -moz-transform: scale($transform-scale-in);
+    -webkit-transform: scale($transform-scale-in);
+}

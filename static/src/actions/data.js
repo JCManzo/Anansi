@@ -1,41 +1,71 @@
 import {
-  FETCH_PHOTOSTREAM_DATA_REQUEST,
-  RECEIVE_PHOTOSTREAM_DATA_SUCCESS,
-  RECEIVE_PHOTOSTREAM_DATA_FAILURE
+  FETCH_HOME_FEED_REQUEST,
+  FETCH_HOME_FEED_SUCCESS,
+  FETCH_HOME_FEED_FAILURE,
+  UPLOAD_MODAL_TOGGLE_REQUEST,
+  UPLOAD_PHOTOS_REQUEST,
+  UPLOAD_PHOTOS_SUCCESS,
+  UPLOAD_PHOTOS_FAILURE
 } from '../constants/index';
 
-import { getAllPhotos } from '../utils/http_funcs';
+import { getAllPhotos, uploadPhotos } from '../utils/http_funcs';
 
-export function photostreamDataFailure() {
+// Upload actions
+export function uploadModalToggleRequest() {
   return {
-    type: RECEIVE_PHOTOSTREAM_DATA_FAILURE
+    type: UPLOAD_MODAL_TOGGLE_REQUEST
   };
 }
 
-export function fetchPhotoStreamRequest() {
+export function uploadPhotosRequest() {
   return {
-    type: FETCH_PHOTOSTREAM_DATA_REQUEST
+    type: UPLOAD_PHOTOS_REQUEST
   };
 }
 
-export function photostreamDataSuccess(photos) {
+export function uploadPhotosFailure() {
   return {
-    type: RECEIVE_PHOTOSTREAM_DATA_SUCCESS,
+    type: UPLOAD_PHOTOS_FAILURE
+  };
+}
+
+export function uploadPhotosSuccess() {
+  return {
+    type: UPLOAD_PHOTOS_SUCCESS
+  };
+}
+
+// Home feed actions
+export function fetchHomeFeedFailure() {
+  return {
+    type: FETCH_HOME_FEED_FAILURE
+  };
+}
+
+export function fetchHomeFeedRequest() {
+  return {
+    type: FETCH_HOME_FEED_REQUEST
+  };
+}
+
+export function fetchHomeFeedSuccess(photos) {
+  return {
+    type: FETCH_HOME_FEED_SUCCESS,
     payload: {
       photos
     }
   };
 }
 
-export function fetchPhotoStream() {
+export function fetchHomeFeed() {
   return function(dispatch) {
-    dispatch(fetchPhotoStreamRequest());
+    dispatch(fetchHomeFeedRequest());
     return getAllPhotos()
      .then((jsonResponse) => {
-        dispatch(photostreamDataSuccess(jsonResponse.data));
+        dispatch(fetchHomeFeedSuccess(jsonResponse.data));
       })
       .catch((error) => {
-        dispatch(photostreamDataFailure({
+        dispatch(fetchHomeFeedFailure({
           response: {
             status: 500,
             statusText: 'There was a error retrieving photostream'
@@ -43,4 +73,4 @@ export function fetchPhotoStream() {
         }));
       });
     }
-};
+}

@@ -1,9 +1,9 @@
 import { request } from './misc';
+import { SERVER_ADDRESS } from '../constants/index'
 
-const server = 'http://127.0.0.1:5000';
 
 export function createUser(email, username, password) {
-  return request(`${server}/api/create_user`, {
+  return request(`${SERVER_ADDRESS}/api/create_user`, {
     body: JSON.stringify({
       email,
       username,
@@ -18,7 +18,7 @@ export function createUser(email, username, password) {
 }
 
 export function getToken(email, password) {
-  return request(`${server}/api/get_token`, {
+  return request(`${SERVER_ADDRESS}/api/get_token`, {
     body: JSON.stringify({
       email,
       password
@@ -32,7 +32,7 @@ export function getToken(email, password) {
 }
 
 export function isTokenValid(token) {
-  return request(`${server}/api/is_token_valid`, {
+  return request(`${SERVER_ADDRESS}/api/is_token_valid`, {
     body: JSON.stringify({ token }),
     headers: {
       Accept: 'application/json',
@@ -51,7 +51,7 @@ export function uploadPhotos(files) {
     data.append('files[]', file);
   });
 
-  return request(`${server}/api/photos`, {
+  return request(`${SERVER_ADDRESS}/api/photos`, {
     body: data,
     headers: {
       Authorization: `Bearer ${token}`
@@ -62,7 +62,7 @@ export function uploadPhotos(files) {
 
 export function getAllPhotos() {
   const token = localStorage.getItem('token');
-  return request(`${server}/api/photos`, {
+  return request(`${SERVER_ADDRESS}/api/photos`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
