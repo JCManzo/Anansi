@@ -121,10 +121,7 @@ class NavBar extends Component {
               <Link to="/home" role="button" className="nav-link">Home</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Photo Roll</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Profile</a>
+              <Link to="/profile" replace role="button" className="nav-link">Profile</Link>
             </li>
           </ul>
           <SearchBar />
