@@ -42,7 +42,7 @@ export function isTokenValid(token) {
   });
 }
 
-export function uploadPhotos(files) {
+/*export function uploadPhotos(files) {
   const token = localStorage.getItem('token');
   const data = new FormData();
 
@@ -58,7 +58,7 @@ export function uploadPhotos(files) {
     },
     method: 'POST'
   });
-}
+}*/
 
 export function fetchPhotos(userId = null) {
   const token = localStorage.getItem('token');

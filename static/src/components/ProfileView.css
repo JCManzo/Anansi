@@ -8,3 +8,15 @@
 
 #profile-header-container {
 }
+
+#profile-image {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+}
+
+#profile-image > img {
+    height: 100%;
+    transform: translateX(-50%);
+    margin-left: 50%;
+}

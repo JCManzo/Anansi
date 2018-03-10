@@ -8,7 +8,7 @@ import {
   UPLOAD_PHOTOS_FAILURE
 } from '../constants/index';
 
-import { fetchPhotos, uploadPhotos } from '../utils/http_funcs';
+import { fetchPhotos } from '../utils/http_funcs';
 
 // Upload actions
 export function uploadModalToggleRequest() {

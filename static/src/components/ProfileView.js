@@ -12,15 +12,15 @@ class ProfileView extends Component {
     return (
       <section>
         <div id="profile-header-container">
-          <div id="profile-image">
-            <img width="120px" className="rounded-circle" alt="Profile avatar" src={Avatar} />
+          <div id="profile-image" className="rounded-circle">
+            <img alt="Profile avatar" src={Avatar} />
           </div>
-          <div id="profile-statistics" style={{display: "inline-block"}}>
+          <div id="profile-statistics">
             <p>You have shared <b>4</b> Posts</p>
             <p>You have received <b>122</b> Likes</p>
           </div>
         </div>
-        <hr/>
+        <hr />
         <PhotoStream />
       </section>
     );
