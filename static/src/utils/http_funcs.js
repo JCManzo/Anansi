@@ -60,7 +60,7 @@ export function uploadPhotos(files) {
   });
 }
 
-export function getAllPhotos() {
+export function fetchPhotos(userId = null) {
   const token = localStorage.getItem('token');
   return request(`${SERVER_ADDRESS}/api/photos`, {
     headers: {

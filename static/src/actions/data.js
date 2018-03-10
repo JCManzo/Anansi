@@ -8,7 +8,7 @@ import {
   UPLOAD_PHOTOS_FAILURE
 } from '../constants/index';
 
-import { getAllPhotos, uploadPhotos } from '../utils/http_funcs';
+import { fetchPhotos, uploadPhotos } from '../utils/http_funcs';
 
 // Upload actions
 export function uploadModalToggleRequest() {
@@ -60,7 +60,7 @@ export function fetchHomeFeedSuccess(photos) {
 export function fetchHomeFeed() {
   return function(dispatch) {
     dispatch(fetchHomeFeedRequest());
-    return getAllPhotos()
+    return fetchPhotos()
      .then((jsonResponse) => {
         dispatch(fetchHomeFeedSuccess(jsonResponse.data));
       })

@@ -50,7 +50,6 @@ class PhotoDropzone extends Component {
         console.log('Added file..');
       },
       init: (dropzone) => {
-        console.log(dropzone);
         this.dropzone = dropzone;
       },
       success: () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -117,11 +117,22 @@ class NavBar extends Component {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <Link to="/home" role="button" className="nav-link">Home</Link>
+            <li className="nav-item">
+              <NavLink activeClassName="active"
+                to="/home"
+                className="nav-link"
+                role="button"
+              >Home
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/profile" replace role="button" className="nav-link">Profile</Link>
+              <NavLink
+                activeClassName="active"
+                to="/profile"
+                role="button"
+                className="nav-link"
+              >Profile
+              </NavLink>
             </li>
           </ul>
           <SearchBar />
