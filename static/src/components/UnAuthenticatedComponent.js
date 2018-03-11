@@ -43,15 +43,14 @@ export function requireNoAuthentication(Component) {
         if (token) {
           // Validate token.
           isTokenValid(token)
-            .then((jsonResponse) => {
-              if (jsonResponse.token_is_valid) {
-                // Token was validated successfully, reidrect home.
-                this.props.loginUserSuccess(token);
-                history.push('/home');
-              } else {
-                // Token is not valid!
-                this.setState({ loaded: true });
-              }
+            .then((respose) => {
+              // Token was validated successfully, reidrect home.
+              this.props.loginUserSuccess(token);
+              history.push('/home');
+            })
+            .catch((error) => {
+              // Token is not valid!
+              this.setState({ loaded: true });
             });
         } else {
           // No token was found.

@@ -38,14 +38,13 @@ export function requireAuthentication(Component) {
           // Found a token. Let's validate against server.
           isTokenValid(token)
             .then((respose) => {
-              if (respose.token_is_valid) {
-                // Valid token. Proceed with login.
-                this.props.loginUserSuccess(token);
-                this.setState({ loaded_if_needed: true });
-              } else {
+              // Valid token. Proceed with login.
+              this.props.loginUserSuccess(token);
+              this.setState({ loaded_if_needed: true });
+            })
+            .catch((error) => {
                 // Couldn't verify token was legit. Redirect to login page.
                 history.push('/login');
-              }
             });
         }
       } else {

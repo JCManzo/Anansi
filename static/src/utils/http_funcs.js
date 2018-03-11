@@ -33,12 +33,9 @@ export function getToken(email, password) {
 
 export function isTokenValid(token) {
   return request(`${SERVER_ADDRESS}/api/is_token_valid`, {
-    body: JSON.stringify({ token }),
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'POST'
+      Authorization: `Bearer ${token}`,
+    }
   });
 }
 

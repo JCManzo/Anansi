@@ -4,7 +4,7 @@ import sys
 from sqlalchemy.exc import *
 
 from .models import User, Photo, PhotoSchema
-from .utils.auth import generate_token, validate_token
+from .utils.auth import validate_request_token, generate_token
 from marshmallow import pprint
 
 
@@ -57,15 +57,11 @@ def get_token():
     return jsonify(error=True), 403
 
 
-@app.route('/api/is_token_valid', methods=['POST'])
+@app.route('/api/is_token_valid', methods=['GET'])
 def is_token_valid():
-    data = request.get_json()
-    is_valid = validate_token(data['token'])
-
-    if is_valid:
-        return jsonify(token_is_valid=True)
-    else:
-        return jsonify(token_is_valid=False), 403
+    # Validate request token and return success if no error is raised.
+    validate_request_token()
+    return jsonify(success=True)
 
 
 @app.route('/uploads/<path:filename>', methods=['GET'])
@@ -78,15 +74,8 @@ def download_file(filename):
 @app.route('/api/photos', methods=['POST', 'GET'])
 def photos(id=None):
     # Upload photos with POST or fetch an image with GET
-    if not request.headers.get('Authorization'):
-        return jsonify(error='No token provided.')
-
-    if request.method == 'POST' and request.files.getlist('file'):
-        token = request.headers.get('Authorization').split('Bearer ', 1)[1]
-        token = validate_token(token)
-        if not token:
-            return jsonify(token_is_valid=False), 403
-
+    token = validate_request_token()
+    if request.method == 'POST' and token:
         # Get user id from opened token.
         user_id = token.get('id')
         for file in request.files.getlist('file'):
