@@ -23,6 +23,11 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, dataActions, authActions), dispatch);
 }
 
+function handleHideModal(props) {
+  console.log('handleHideModal');
+  props.uploadModalToggleRequest();
+}
+
 function NavBarActions(props) {
   if (props.auth.isAuthenticated) {
     return (
@@ -64,6 +69,7 @@ function NavBarActions(props) {
           title="Upload an Image"
           modalId="uploadModal"
           modalActionButton="Upload"
+          handleHideModal={() => handleHideModal(props)}
           onModalActionClick={() => props.uploadPhotosRequest()}
         >
           <PhotoDropzone upload={props.data.uploadPhotoRequest}/>
