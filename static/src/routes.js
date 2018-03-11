@@ -13,6 +13,7 @@ export default function buildRoutes(App) {
     <div>
       <Route component={App} />
       <Switch>
+        <Route exact path="/" render={() => (<Redirect to="/login" />)} />
         <Route exact path="/home" component={requireAuthentication(HomeView)} />
         <Route exact path="/login" component={requireNoAuthentication(LoginView)} />
         <Route exact path="/register" component={requireNoAuthentication(RegisterView)} />

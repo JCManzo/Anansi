@@ -54,36 +54,19 @@ function NavBarActions(props) {
           className="btn btn-success"
           data-toggle="modal"
           data-target="#uploadModal"
-          onClick={ () => props.uploadModalToggleRequest()}
+          onClick={() => props.uploadModalToggleRequest()}
         >Upload
         </button>
 
         {/* Upload modal */}
-        <Modal show={props.data.isUploadModalOpen}>
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="uploadModalTitle">Upload an image</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                />
-              </div>
-              <div className="modal-body">
-                <PhotoDropzone upload={props.data.uploadPhotoRequest}/>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={ () => props.uploadPhotosRequest() }
-                >Upload
-                </button>
-              </div>
-            </div>
-          </div>
+        <Modal
+          show={props.data.isUploadModalOpen}
+          title="Upload an Image"
+          modalId="uploadModal"
+          modalActionButton="Upload"
+          onModalActionClick={() => props.uploadPhotosRequest()}
+        >
+          <PhotoDropzone upload={props.data.uploadPhotoRequest}/>
         </Modal>
       </div>
     );
@@ -146,7 +129,7 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  uploadPhotosRequest: PropTypes.func.isRequired,
+  uploadModalToggleRequest: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired
 };
 

@@ -1,5 +1,6 @@
-from index import db, bcrypt
 from marshmallow import Schema, fields
+from datetime import datetime
+from index import db, bcrypt
 
 
 class User(db.Model):
@@ -40,18 +41,40 @@ class User(db.Model):
 class Photo(db.Model):
     __tablename__ = 'photos'
 
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     filename = db.Column(db.String, default=None, nullable=True)
     url = db.Column(db.String, default=None, nullable=True)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_updated = db.Column(db.DateTime, default=datetime.utcnow)
+    caption = db.Column(db.String, default=None, nullable=True)
 
-    def __init__(self, user_id, filename=None, url=None):
+    def __init__(self, user_id, filename=None, url=None, caption=None):
         self.user_id = user_id
         self.filename = filename
         self.url = url
+        self.caption = caption
 
 
 class PhotoSchema(Schema):
     id = fields.Int(dump_only=True)
     user_id = fields.Int(required=True)
     url = fields.Str(required=True)
+    date_created = fields.DateTime(required=True)
+    date_updated = fields.DateTime(required=True)
+    caption = fields.Str(required=True)
+
+
+class Like(db.Model):
+    __tablename__ = 'likes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    photo_id = db.Column(db.Integer, db.ForeignKey('photos.id'))
+
+
+class LikeSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(required=True)
+    photo_id = fields.Int(required=True)
+

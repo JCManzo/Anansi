@@ -16,3 +16,4 @@ __pycache__/
 *.pyc
 static/dist
 migrations/versions/
+static/uploads/*
