@@ -57,7 +57,7 @@ class PhotoDropzone extends Component {
         props.uploadPhotosSuccess();
         this.dropzone.removeFile(file);
         props.fetchHomeFeed();
-        //$('#uploadModal').modal('hide')
+        $('#uploadModal').modal('hide')
         console.log('success');
       },
       removedFile: () => {
