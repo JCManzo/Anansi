@@ -10,6 +10,7 @@ class Modal extends Component {
 
   componentDidMount() {
     // Listen to modal close events
+    $(this.modal).modal('show');
     $(this.modal).on('hidden.bs.modal', this.props.handleHideModal);
   }
 
@@ -31,14 +32,6 @@ class Modal extends Component {
             </div>
             <div className="modal-body">
               {this.props.children}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.props.onModalActionClick}
-              >{this.props.modalActionButton}
-              </button>
             </div>
           </div>
         </div>

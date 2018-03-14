@@ -4,7 +4,7 @@ from index import db, bcrypt
 
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'User'
 
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -38,16 +38,24 @@ class User(db.Model):
             return None
 
 
+photo_tags = db.Table('photo_tags',
+    db.Column('photo_id', db.Integer, db.ForeignKey('Photo.id'), primary_key=True),
+    db.Column('tag_id', db.Integer, db.ForeignKey('Tag.id'), primary_key=True)
+)
+
+
 class Photo(db.Model):
-    __tablename__ = 'photos'
+    __tablename__ = 'Photo'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
     filename = db.Column(db.String, default=None, nullable=True)
     url = db.Column(db.String, default=None, nullable=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     date_updated = db.Column(db.DateTime, default=datetime.utcnow)
     caption = db.Column(db.String, default=None, nullable=True)
+    tags = db.relationship('Tag', secondary=photo_tags, lazy='subquery', backref=db.backref('Photo', lazy=True))
+    likes = db.relationship('Like', backref='Photo', lazy=True)
 
     def __init__(self, user_id, filename=None, url=None, caption=None):
         self.user_id = user_id
@@ -65,16 +73,19 @@ class PhotoSchema(Schema):
     caption = fields.Str(required=True)
 
 
-class Like(db.Model):
-    __tablename__ = 'likes'
+class Tag(db.Model):
+    __tablename__ = 'Tag'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    photo_id = db.Column(db.Integer, db.ForeignKey('photos.id'))
+    name = db.Column(db.String, unique=True, nullable=False)
+    photos = db.relationship('Photo', secondary=photo_tags, backref=db.backref('Tag', lazy=True))
 
 
-class LikeSchema(Schema):
-    id = fields.Int(dump_only=True)
-    user_id = fields.Int(required=True)
-    photo_id = fields.Int(required=True)
+class Like(db.Model):
+    __tablename__ = 'Like'
 
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
+    photo_id = db.Column(db.Integer, db.ForeignKey('Photo.id'))
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_updated = db.Column(db.DateTime, default=datetime.utcnow)

@@ -39,7 +39,8 @@ class PhotoDropzone extends Component {
       headers: {
         // Send JWT needed for file uploads.
         Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
+      },
+      maxFiles: 1
     };
 
     // The DropJS object
@@ -52,8 +53,11 @@ class PhotoDropzone extends Component {
       init: (dropzone) => {
         this.dropzone = dropzone;
       },
-      success: () => {
+      success: (file) => {
         props.uploadPhotosSuccess();
+        this.dropzone.removeFile(file);
+        props.fetchHomeFeed();
+        //$('#uploadModal').modal('hide')
         console.log('success');
       },
       removedFile: () => {
@@ -66,19 +70,19 @@ class PhotoDropzone extends Component {
       processing: (file) => {
         console.log('Processing file', file);
       },
-      sending: (file) => {
+      sending: (file, xhr, formData) => {
+        formData.append("caption", this.props.caption);
+        formData.append("tags", this.props.tags);
         console.log('Sending file', file);
       },
       complete: (file) => {
-        this.dropzone.removeFile(file);
-        props.fetchHomeFeed();
-        $('#uploadModal').modal('hide')
+        
       }
     };
   }
 
   render() {
-    if (this.props.upload) {
+    if (this.props.data.uploadPhotoRequest) {
       this.dropzone.processQueue();
       console.log('Uploading..');
     }
@@ -94,7 +98,6 @@ class PhotoDropzone extends Component {
 }
 
 PhotoDropzone.propTypes = {
-  upload: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoDropzone);

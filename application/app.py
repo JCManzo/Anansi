@@ -3,8 +3,8 @@ from index import app, db, PhotoSet
 import sys
 from sqlalchemy.exc import *
 
-from .models import User, Photo, PhotoSchema
-from .utils.auth import validate_request_token, generate_token
+from .models import User, Photo, PhotoSchema, Tag
+from .utils.auth import validate_request_token, generate_token, InvalidUsage
 from marshmallow import pprint
 
 
@@ -60,8 +60,10 @@ def get_token():
 @app.route('/api/is_token_valid', methods=['GET'])
 def is_token_valid():
     # Validate request token and return success if no error is raised.
-    validate_request_token()
-    return jsonify(success=True)
+    token = validate_request_token()
+    if token:
+        return jsonify(success=True)
+    return jsonify(success=False), 403
 
 
 @app.route('/uploads/<path:filename>', methods=['GET'])
@@ -77,22 +79,36 @@ def photos(id=None):
     token = validate_request_token()
     if request.method == 'POST' and token:
         # Get user id from opened token.
-        user_id = token.get('id')
-        for file in request.files.getlist('file'):
-            # Save file and get it's name (including folder)
-            filename = PhotoSet.save(file)
-            photo = Photo(
-                user_id=user_id,
-                filename=filename,
-                url=PhotoSet.url(filename)
-            )
-            db.session.add(photo)
+        caption = request.form.get('caption')
+        tags = request.form.get('tags')
+        file = request.files.get('file')
+        if caption and tags and file:
+            user_id = token.get('id')
+            for file in request.files.getlist('file'):
+                # Save file and get it's name (including folder)
+                filename = PhotoSet.save(file)
+                photo = Photo(
+                    user_id=user_id,
+                    filename=filename,
+                    url=PhotoSet.url(filename),
+                    caption=caption
+                )
 
-            try:
-                db.session.commit()
-            except SQLAlchemyError:
-                return jsonify(message="Unable to upload image " + filename), 409
-        return jsonify(success=True)
+                # Lookup tags
+                tags = tags.split()
+                for tag in tags:
+                    photo_tag = add_tags(tag);
+                    print('TAG', tag, file=sys.stdout)
+                    photo.tags.append(photo_tag);
+                db.session.add(photo)
+
+                try:
+                    db.session.commit()
+                except SQLAlchemyError:
+                    return jsonify(message="Unable to upload image " + filename), 409
+            return jsonify(success=True)
+        else:
+            raise InvalidUsage('Required parameters: caption, tags or file are invalid', status_code=403)
     elif request.method == 'GET':
         if id:
             # Get image with id
@@ -104,3 +120,13 @@ def photos(id=None):
             return jsonify(data=data, errors=errors)
 
     return jsonify(message='Method not allowed'), 405
+
+def add_tags(tag):
+    existing_tag = Tag.query.filter(Tag.name == tag.lower()).one_or_none()
+    print('EXISTING TAG', existing_tag, file=sys.stderr)
+    if existing_tag is not None:
+        return existing_tag
+    else:
+        new_tag = Tag()
+        new_tag.name = tag.lower()
+        return new_tag
