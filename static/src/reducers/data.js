@@ -13,7 +13,6 @@ const initialState = {
   receivedPhotoStream: false,
   photoStreamFailure: false,
   photos: [],
-  queuedPhotos: [],
   isUploadModalOpen: false,
   uploadPhotoRequest: false,
   isPhotoUploadSuccess: false,
@@ -27,7 +26,10 @@ export default function (state = initialState, action) {
     case FETCH_HOME_FEED_REQUEST:
       return Object.assign({}, state, {
         isFetchingPhotoStream: true,
-        photoStreamFailure: false
+        photoStreamFailure: false,
+        uploadPhotoRequest: false,
+        isPhotoUploadSuccess: false,
+        isPhotoUploaFailure: false
       });
     case FETCH_HOME_FEED_SUCCESS:
       return Object.assign({}, state, {
@@ -55,12 +57,14 @@ export default function (state = initialState, action) {
     case UPLOAD_PHOTOS_SUCCESS:
       return Object.assign({}, state, {
         uploadPhotoRequest: false,
-        isPhotoUploadSuccess: true
+        isPhotoUploadSuccess: true,
+        isPhotoUploaFailure: false
       });
     case UPLOAD_PHOTOS_FAILURE:
       return Object.assign({}, state, {
-        uploadPhotoRequest: true,
-        isPhotoUploadSuccess: false
+        uploadPhotoRequest: false,
+        isPhotoUploadSuccess: false,
+        isPhotoUploaFailure: true
       });
     default:
       return state;

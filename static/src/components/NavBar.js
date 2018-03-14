@@ -9,8 +9,7 @@ import * as dataActions from '../actions/data';
 import SearchBar from './SearchBar';
 import Avatar from '../../assets/av.png';
 import './NavBar.scss';
-import Modal from './Modal';
-import PhotoDropzone from './PhotoDropzone';
+import UploadView from './UploadView';
 
 function mapStateToProps(state) {
   return {
@@ -57,17 +56,7 @@ function NavBarActions(props) {
           onClick={() => props.uploadModalToggleRequest()}
         >Upload
         </button>
-
-        {/* Upload modal */}
-        <Modal
-          show={props.data.isUploadModalOpen}
-          title="Upload an Image"
-          modalId="uploadModal"
-          modalActionButton="Upload"
-          onModalActionClick={() => props.uploadPhotosRequest()}
-        >
-          <PhotoDropzone upload={props.data.uploadPhotoRequest}/>
-        </Modal>
+        <UploadView />
       </div>
     );
   }

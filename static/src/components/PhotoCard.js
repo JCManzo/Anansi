@@ -6,7 +6,7 @@ function PhotoCard({photo}) {
 
   return (
     <div
-      className="col-sm-6 col-lg-3 mb-2"
+      className="photo-card photo-card-animate col-sm-6 col-lg-3 mb-2"
       onClick={() => onPhotoSelect(photo)}
     >
       <img alt="Photo card" className="img-fluid img-thumbnail" src={photoUrl} />

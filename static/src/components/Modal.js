@@ -8,6 +8,12 @@ class Modal extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    // Listen to modal close events
+    $(this.modal).modal('show');
+    $(this.modal).on('hidden.bs.modal', this.props.handleHideModal);
+  }
+
   render() {
     return (
       <div
@@ -16,6 +22,7 @@ class Modal extends Component {
         tabIndex="-1"
         aria-labelledby="modalTitle"
         aria-hidden="true"
+        ref={(modal) => { this.modal = modal; }}
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
@@ -26,14 +33,6 @@ class Modal extends Component {
             <div className="modal-body">
               {this.props.children}
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.props.onModalActionClick}
-              >{this.props.modalActionButton}
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -42,12 +41,14 @@ class Modal extends Component {
 }
 
 Modal.defaultProps = {
-  title: ''
+  title: '',
+  handleHideModal: null
 };
 
 Modal.propTypes = {
   title: PropTypes.string,
-  modalId: PropTypes.string
+  modalId: PropTypes.string.isRequired,
+  handleHideModal: PropTypes.func
 };
 
 export default Modal;
